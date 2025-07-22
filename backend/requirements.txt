@@ -1,0 +1,8 @@
+Flask
+Flask-PyMongo
+Flask-CORS
+Flask-JWT-Extended
+passlib
+python-dotenv
+yfinance 
+gunicorn
