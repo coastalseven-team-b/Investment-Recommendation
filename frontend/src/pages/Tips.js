@@ -103,56 +103,26 @@ const tipsByGoal = {
 };
 
 function Tips() {
-  const [profile, setProfile] = useState(null);
-  const [behaviour, setBehaviour] = useState(null);
+  const [summary, setSummary] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchSummary = async () => {
       setLoading(true);
       setError("");
-      let profileData = null;
-      let behaviourData = null;
       try {
         const token = localStorage.getItem("token");
         const headers = { Authorization: `Bearer ${token}` };
-        const profileRes = await axios.get("/api/profile", { headers });
-        profileData = profileRes.data;
-        setProfile(profileData);
+        const res = await axios.get("/api/summary", { headers });
+        setSummary(res.data);
       } catch (err) {
-        setError("Failed to load user profile");
-      }
-      try {
-        const token = localStorage.getItem("token");
-        const headers = { Authorization: `Bearer ${token}` };
-        const behaviourRes = await axios.get("/api/financial-behaviour", { headers });
-        behaviourData = behaviourRes.data.behaviour;
-        setBehaviour(behaviourData);
-      } catch (err) {
-        // Ignore behaviour error, just don't set it
+        setError("Failed to load financial summaries. Please upload your bank data and make investments.");
       }
       setLoading(false);
     };
-    fetchData();
+    fetchSummary();
   }, []);
-
-  const getTips = () => {
-    if (typeof window !== 'undefined' && localStorage.getItem('skipped_risk_profile') === 'true') {
-      return [
-        'Diversify your investments to reduce risk.',
-        'Consider starting with index funds or fixed deposits.',
-        'Review your investments periodically.',
-        'Avoid putting all your money in one asset class.'
-      ];
-    }
-    if (!profile) return [];
-    let tips = [];
-    if (behaviour && tipsByBehaviour[behaviour]) tips = tips.concat(tipsByBehaviour[behaviour]);
-    if (profile.risk_level && tipsByRisk[profile.risk_level]) tips = tips.concat(tipsByRisk[profile.risk_level]);
-    if (profile.investment_goal && tipsByGoal[profile.investment_goal]) tips = tips.concat(tipsByGoal[profile.investment_goal]);
-    return tips;
-  };
 
   return (
     <motion.div
@@ -163,20 +133,40 @@ function Tips() {
     >
       <NavBar />
       <Container>
-        <Card>
-          <h2>Personalized Financial Tips</h2>
-          {loading && <div>Loading...</div>}
-          {!loading && getTips().length === 0 && (
-            <div style={{ color: '#e53935' }}>No tips available. Please complete your profile and risk assessment.</div>
-          )}
-          {!loading && getTips().length > 0 && (
+        {summary?.basic_tips ? (
+          <Card>
+            <h2>Tips</h2>
+            {summary.missing_data && summary.missing_data.length > 0 && (
+              <div style={{ marginBottom: 12, color: '#e53935' }}>
+                {`To get detailed summaries and personalized tips, please add your: ${summary.missing_data.join(' and ')}.`}
+              </div>
+            )}
             <ul>
-              {getTips().map((tip, i) => (
-                <li key={i}>{tip}</li>
-              ))}
+              {summary.basic_tips.map((tip, i) => <li key={i}>{tip}</li>)}
             </ul>
-          )}
-        </Card>
+          </Card>
+        ) : (
+          <>
+            <Card>
+              <h2>Financial Behaviour Summary</h2>
+              {loading ? <div>Loading...</div> : error ? <div style={{ color: '#e53935' }}>{error}</div> : <div>{summary?.financial_behavior_summary || 'No summary available.'}</div>}
+            </Card>
+            <Card>
+              <h2>Investment Summary</h2>
+              {loading ? <div>Loading...</div> : error ? <div style={{ color: '#e53935' }}>{error}</div> : <div>{summary?.investment_summary || 'No summary available.'}</div>}
+            </Card>
+            <Card>
+              <h2>Tips for Future Investments</h2>
+              {loading ? <div>Loading...</div> : error ? <div style={{ color: '#e53935' }}>{error}</div> : (
+                <ul>
+                  {Array.isArray(summary?.investment_tips)
+                    ? summary.investment_tips.map((tip, i) => <li key={i}>{tip}</li>)
+                    : (summary?.investment_tips || '').split(/\n|\r/).filter(Boolean).map((tip, i) => <li key={i}>{tip}</li>)}
+                </ul>
+              )}
+            </Card>
+          </>
+        )}
       </Container>
     </motion.div>
   );

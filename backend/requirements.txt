@@ -6,3 +6,4 @@ passlib
 python-dotenv
 yfinance 
 gunicorn
+google-generativeai

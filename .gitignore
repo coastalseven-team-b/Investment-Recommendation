@@ -2,8 +2,7 @@
 node_modules/
 build/
 dist/
-.env
-.env.*
+
 
 # Python
 __pycache__/
@@ -46,15 +45,7 @@ htmlcov/
 *.swp
 *.swo
 
-# Ignore model and pickle files
-*.pkl
-*.pickle
 
 # Ignore PDF and large docs
 *.pdf
 
-# Ignore test and dataset files
-*.json
-!package.json
-!frontend/package.json
-!backend/requirements.txt 

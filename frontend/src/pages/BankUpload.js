@@ -26,19 +26,6 @@ function BankUpload() {
 
   useEffect(() => {
     fetchTransactions();
-    // Check if transactions exist after fetching
-    const checkBankUploaded = async () => {
-      try {
-        const token = localStorage.getItem("token");
-        const headers = { Authorization: `Bearer ${token}` };
-        const txRes = await axios.get("/api/transactions", { headers });
-        const txs = txRes.data.transactions || txRes.data;
-        if (Array.isArray(txs) && txs.length > 0) {
-          localStorage.setItem('bank_uploaded', 'true');
-        }
-      } catch {}
-    };
-    checkBankUploaded();
   }, []);
 
   const handleFile = (e) => {
@@ -59,22 +46,18 @@ function BankUpload() {
       });
       setMsg(res.data.msg);
       setBehavior(res.data.financial_behavior_label || res.data.financial_behavior_score || null);
-      localStorage.setItem('bank_uploaded', 'true');
       fetchTransactions();
     } catch (err) {
-      setMsg("Upload failed");
+      const backendError = err.response?.data?.error || err.response?.data?.msg || "Upload failed";
+      setMsg(backendError);
     } finally {
       setLoading(false);
     }
   };
+  
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.8 }}
-      animate={{ opacity: 1, scale: 1 }}
-      exit={{ opacity: 0, scale: 0.8 }}
-      transition={{ duration: 0.5, ease: "backOut" }}
-    >
+    <>
       <NavBar />
       <Box sx={{ bgcolor: 'background.default', minHeight: '100vh', py: 4 }}>
         <Box sx={{ maxWidth: 900, mx: 'auto', px: 2 }}>
@@ -152,8 +135,8 @@ function BankUpload() {
           )}
         </Box>
       </Box>
-    </motion.div>
+    </>
   );
 }
 
-export default BankUpload; 
+export default BankUpload;
