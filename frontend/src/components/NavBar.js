@@ -9,6 +9,8 @@ import PersonIcon from '@mui/icons-material/Person';
 import LogoutIcon from '@mui/icons-material/Logout';
 import UploadFileIcon from '@mui/icons-material/UploadFile';
 import { motion } from "framer-motion";
+import axios from "axios";
+import { useEffect, useState } from "react";
 
 function NavBar() {
   const navigate = useNavigate();
@@ -18,6 +20,40 @@ function NavBar() {
     localStorage.removeItem("token");
     navigate("/login");
   };
+
+  // Banner logic
+  const [bannerMsg, setBannerMsg] = useState("");
+
+  useEffect(() => {
+    async function checkUserStatus() {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setBannerMsg("");
+        return;
+      }
+      try {
+        const headers = { Authorization: `Bearer ${token}` };
+        const profileRes = await axios.get("/api/profile", { headers });
+        const profile = profileRes.data;
+        let riskDone = profile.risk_profile_completed && profile.risk_level && profile.investment_goal;
+        // Check bank upload by fetching transactions/behavior
+        let bankDone = false;
+        try {
+          const txRes = await axios.get("/api/transactions", { headers });
+          bankDone = txRes.data.behavior && txRes.data.behavior.toLowerCase() !== 'unknown';
+        } catch {
+          bankDone = false;
+        }
+        if (!riskDone && !bankDone) setBannerMsg("For a better experience and personalized recommendations, please fill in the risk questionnaire and upload your bank statement!");
+        else if (!riskDone) setBannerMsg("Please complete your risk profile questionnaire for personalized recommendations.");
+        else if (!bankDone) setBannerMsg("Please upload your bank statement for personalized recommendations.");
+        else setBannerMsg("");
+      } catch {
+        setBannerMsg("");
+      }
+    }
+    checkUserStatus();
+  }, [location.pathname]);
 
   const navItems = [
     { path: "/dashboard", label: "Dashboard", icon: <DashboardIcon /> },
@@ -79,10 +115,10 @@ function NavBar() {
         </Toolbar>
       </AppBar>
       {/* Scrolling banner for users who skipped info or didn't upload bank statement */}
-      {typeof window !== 'undefined' && (localStorage.getItem('skipped_risk_profile') === 'true' || localStorage.getItem('bank_uploaded') !== 'true') && (
+      {bannerMsg && (
         <Box sx={{ width: '100%', bgcolor: '#ffecb3', color: '#856404', py: 1, px: 2, overflow: 'hidden', borderBottom: '2px solid #ffe082', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
           <marquee style={{ fontWeight: 600, fontSize: 16 }}>
-            For a better experience and personalized recommendations, please fill in the risk questionnaire and upload your bank statement!
+            {bannerMsg}
           </marquee>
         </Box>
       )}

@@ -7,6 +7,7 @@ import AccountBalanceWalletIcon from '@mui/icons-material/AccountBalanceWallet';
 import TrendingUpIcon from '@mui/icons-material/TrendingUp';
 import SavingsIcon from '@mui/icons-material/Savings';
 import CurrencyRupeeIcon from '@mui/icons-material/CurrencyRupee';
+import { useNavigate } from "react-router-dom";
 
 function formatCurrency(amount) {
   return new Intl.NumberFormat('en-IN', {
@@ -32,6 +33,7 @@ function Dashboard() {
   const [profile, setProfile] = useState(null);
   const [investments, setInvestments] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -111,6 +113,8 @@ function Dashboard() {
     }
   ];
 
+  const showRiskProfileButton = !profile.risk_level || !profile.investment_goal;
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 40 }}
@@ -128,6 +132,27 @@ function Dashboard() {
             <Typography variant="subtitle1" color="text.secondary">
               Here's your investment portfolio overview
             </Typography>
+            {/* Risk Profile Button */}
+            {showRiskProfileButton && (
+              <Box sx={{ mt: 2 }}>
+                <button
+                  style={{
+                    background: 'linear-gradient(90deg, #00c6ff 0%, #0072ff 100%)',
+                    color: 'white',
+                    border: 'none',
+                    padding: '12px 28px',
+                    borderRadius: '8px',
+                    fontWeight: 700,
+                    fontSize: '1rem',
+                    cursor: 'pointer',
+                    boxShadow: '0 2px 8px rgba(0,0,0,0.08)',
+                  }}
+                  onClick={() => navigate('/risk-profile')}
+                >
+                  Complete Your Risk Profile
+                </button>
+              </Box>
+            )}
           </Box>
           <Grid container spacing={3} sx={{ mb: 4 }}>
             {statCards.map((card, idx) => (

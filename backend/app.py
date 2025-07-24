@@ -8,7 +8,7 @@ import requests
 load_dotenv()
 
 app = Flask(__name__)
-app.config["MONGO_URI"] = os.getenv("MONGO_URI")
+app.config["MONGO_URI"] = os.getenv("MONGO_URI", "mongodb://localhost:27017/myDatabase")
 app.config["JWT_SECRET_KEY"] = os.getenv("JWT_SECRET")
 
 mongo.init_app(app)
