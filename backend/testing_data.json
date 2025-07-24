@@ -1,0 +1,510 @@
+[
+  {
+    "user_id": "U094",
+    "risk_level": "Low",
+    "tenure": 1,
+    "capital": 9479,
+    "recommendations": [
+      "MF008",
+      "MF001",
+      "ST002"
+    ]
+  },
+  {
+    "user_id": "U250",
+    "risk_level": "High",
+    "tenure": 1,
+    "capital": 20471,
+    "recommendations": [
+      "ST010",
+      "ST007",
+      "MF005"
+    ]
+  },
+  {
+    "user_id": "U279",
+    "risk_level": "High",
+    "tenure": 2,
+    "capital": 82929,
+    "recommendations": [
+      "ST007",
+      "MF005",
+      "MF003"
+    ]
+  },
+  {
+    "user_id": "U109",
+    "risk_level": "Medium",
+    "tenure": 8,
+    "capital": 32280,
+    "recommendations": [
+      "ST006",
+      "ST008",
+      "MF002"
+    ]
+  },
+  {
+    "user_id": "U204",
+    "risk_level": "High",
+    "tenure": 6,
+    "capital": 60335,
+    "recommendations": [
+      "ST004",
+      "ST010",
+      "ST007",
+      "MF003",
+      "MF005"
+    ]
+  },
+  {
+    "user_id": "U282",
+    "risk_level": "Medium",
+    "tenure": 5,
+    "capital": 8565,
+    "recommendations": [
+      "MF006",
+      "ST008",
+      "MF007",
+      "ST006"
+    ]
+  },
+  {
+    "user_id": "U074",
+    "risk_level": "Low",
+    "tenure": 9,
+    "capital": 94725,
+    "recommendations": [
+      "MF008",
+      "ST005",
+      "ST009"
+    ]
+  },
+  {
+    "user_id": "U031",
+    "risk_level": "Medium",
+    "tenure": 10,
+    "capital": 83890,
+    "recommendations": [
+      "ST006",
+      "MF002",
+      "MF010"
+    ]
+  },
+  {
+    "user_id": "U238",
+    "risk_level": "Low",
+    "tenure": 10,
+    "capital": 45859,
+    "recommendations": [
+      "MF001",
+      "ST009",
+      "MF004"
+    ]
+  },
+  {
+    "user_id": "U078",
+    "risk_level": "Medium",
+    "tenure": 8,
+    "capital": 7314,
+    "recommendations": [
+      "MF006",
+      "MF010",
+      "ST001"
+    ]
+  },
+  {
+    "user_id": "U155",
+    "risk_level": "Medium",
+    "tenure": 9,
+    "capital": 67522,
+    "recommendations": [
+      "ST006",
+      "MF002",
+      "MF006"
+    ]
+  },
+  {
+    "user_id": "U120",
+    "risk_level": "Low",
+    "tenure": 1,
+    "capital": 97022,
+    "recommendations": [
+      "MF008",
+      "ST002",
+      "MF004"
+    ]
+  },
+  {
+    "user_id": "U098",
+    "risk_level": "Low",
+    "tenure": 1,
+    "capital": 88482,
+    "recommendations": [
+      "ST009",
+      "MF004",
+      "MF008"
+    ]
+  },
+  {
+    "user_id": "U119",
+    "risk_level": "Medium",
+    "tenure": 10,
+    "capital": 51609,
+    "recommendations": [
+      "MF007",
+      "ST008",
+      "ST001"
+    ]
+  },
+  {
+    "user_id": "U219",
+    "risk_level": "High",
+    "tenure": 7,
+    "capital": 65640,
+    "recommendations": [
+      "MF009",
+      "ST007",
+      "MF005",
+      "ST010",
+      "ST004"
+    ]
+  },
+  {
+    "user_id": "U234",
+    "risk_level": "Low",
+    "tenure": 2,
+    "capital": 30804,
+    "recommendations": [
+      "ST009",
+      "MF004",
+      "ST005"
+    ]
+  },
+  {
+    "user_id": "U149",
+    "risk_level": "Low",
+    "tenure": 8,
+    "capital": 31357,
+    "recommendations": [
+      "ST002",
+      "ST009",
+      "MF001"
+    ]
+  },
+  {
+    "user_id": "U158",
+    "risk_level": "Medium",
+    "tenure": 2,
+    "capital": 64547,
+    "recommendations": [
+      "MF002",
+      "MF010",
+      "ST003",
+      "ST008"
+    ]
+  },
+  {
+    "user_id": "U232",
+    "risk_level": "Medium",
+    "tenure": 10,
+    "capital": 12799,
+    "recommendations": [
+      "ST006",
+      "ST003",
+      "MF007"
+    ]
+  },
+  {
+    "user_id": "U007",
+    "risk_level": "Low",
+    "tenure": 3,
+    "capital": 76125,
+    "recommendations": [
+      "MF008",
+      "ST009",
+      "MF004"
+    ]
+  },
+  {
+    "user_id": "U194",
+    "risk_level": "High",
+    "tenure": 9,
+    "capital": 84243,
+    "recommendations": [
+      "MF003",
+      "ST004",
+      "ST010",
+      "MF005",
+      "ST007"
+    ]
+  },
+  {
+    "user_id": "U187",
+    "risk_level": "High",
+    "tenure": 10,
+    "capital": 12457,
+    "recommendations": [
+      "ST010",
+      "MF003",
+      "ST007"
+    ]
+  },
+  {
+    "user_id": "U083",
+    "risk_level": "High",
+    "tenure": 4,
+    "capital": 16847,
+    "recommendations": [
+      "MF009",
+      "ST007",
+      "ST010"
+    ]
+  },
+  {
+    "user_id": "U018",
+    "risk_level": "Low",
+    "tenure": 4,
+    "capital": 35805,
+    "recommendations": [
+      "MF001",
+      "MF008",
+      "ST002"
+    ]
+  },
+  {
+    "user_id": "U025",
+    "risk_level": "High",
+    "tenure": 3,
+    "capital": 81188,
+    "recommendations": [
+      "ST010",
+      "ST007",
+      "MF003"
+    ]
+  },
+  {
+    "user_id": "U058",
+    "risk_level": "Low",
+    "tenure": 5,
+    "capital": 93538,
+    "recommendations": [
+      "MF004",
+      "MF001",
+      "ST005"
+    ]
+  },
+  {
+    "user_id": "U023",
+    "risk_level": "High",
+    "tenure": 8,
+    "capital": 87873,
+    "recommendations": [
+      "ST007",
+      "MF005",
+      "MF003",
+      "ST010",
+      "ST004"
+    ]
+  },
+  {
+    "user_id": "U257",
+    "risk_level": "Medium",
+    "tenure": 10,
+    "capital": 42623,
+    "recommendations": [
+      "MF010",
+      "MF006",
+      "ST006"
+    ]
+  },
+  {
+    "user_id": "U165",
+    "risk_level": "High",
+    "tenure": 3,
+    "capital": 95395,
+    "recommendations": [
+      "ST007",
+      "MF009",
+      "ST010"
+    ]
+  },
+  {
+    "user_id": "U283",
+    "risk_level": "High",
+    "tenure": 1,
+    "capital": 52656,
+    "recommendations": [
+      "MF003",
+      "ST004",
+      "MF009"
+    ]
+  },
+  {
+    "user_id": "U176",
+    "risk_level": "Medium",
+    "tenure": 1,
+    "capital": 15362,
+    "recommendations": [
+      "MF002",
+      "ST003",
+      "ST008"
+    ]
+  },
+  {
+    "user_id": "U057",
+    "risk_level": "High",
+    "tenure": 3,
+    "capital": 27444,
+    "recommendations": [
+      "MF009",
+      "ST007",
+      "MF005"
+    ]
+  },
+  {
+    "user_id": "U227",
+    "risk_level": "Medium",
+    "tenure": 9,
+    "capital": 16854,
+    "recommendations": [
+      "MF002",
+      "ST006",
+      "MF006"
+    ]
+  },
+  {
+    "user_id": "U287",
+    "risk_level": "Medium",
+    "tenure": 4,
+    "capital": 97285,
+    "recommendations": [
+      "MF007",
+      "MF002",
+      "ST006",
+      "ST003"
+    ]
+  },
+  {
+    "user_id": "U230",
+    "risk_level": "Medium",
+    "tenure": 6,
+    "capital": 46186,
+    "recommendations": [
+      "ST006",
+      "MF010",
+      "MF006",
+      "MF007"
+    ]
+  },
+  {
+    "user_id": "U290",
+    "risk_level": "Low",
+    "tenure": 4,
+    "capital": 49283,
+    "recommendations": [
+      "MF001",
+      "MF004",
+      "ST009"
+    ]
+  },
+  {
+    "user_id": "U064",
+    "risk_level": "Low",
+    "tenure": 2,
+    "capital": 9652,
+    "recommendations": [
+      "ST002",
+      "ST005",
+      "MF001"
+    ]
+  },
+  {
+    "user_id": "U216",
+    "risk_level": "Low",
+    "tenure": 10,
+    "capital": 22971,
+    "recommendations": [
+      "MF001",
+      "MF008",
+      "MF004"
+    ]
+  },
+  {
+    "user_id": "U110",
+    "risk_level": "High",
+    "tenure": 1,
+    "capital": 86973,
+    "recommendations": [
+      "MF005",
+      "ST010",
+      "ST004"
+    ]
+  },
+  {
+    "user_id": "U067",
+    "risk_level": "High",
+    "tenure": 4,
+    "capital": 82768,
+    "recommendations": [
+      "MF003",
+      "ST004",
+      "ST007"
+    ]
+  },
+  {
+    "user_id": "U296",
+    "risk_level": "Low",
+    "tenure": 6,
+    "capital": 35457,
+    "recommendations": [
+      "ST005",
+      "ST009",
+      "ST002"
+    ]
+  },
+  {
+    "user_id": "U166",
+    "risk_level": "Medium",
+    "tenure": 9,
+    "capital": 53217,
+    "recommendations": [
+      "MF006",
+      "ST006",
+      "MF010"
+    ]
+  },
+  {
+    "user_id": "U080",
+    "risk_level": "Low",
+    "tenure": 10,
+    "capital": 79956,
+    "recommendations": [
+      "MF001",
+      "MF008",
+      "ST002"
+    ]
+  },
+  {
+    "user_id": "U043",
+    "risk_level": "High",
+    "tenure": 6,
+    "capital": 23073,
+    "recommendations": [
+      "MF009",
+      "ST007",
+      "ST010"
+    ]
+  },
+  {
+    "user_id": "U076",
+    "risk_level": "Medium",
+    "tenure": 5,
+    "capital": 67795,
+    "recommendations": [
+      "MF010",
+      "MF006",
+      "ST006",
+      "ST001"
+    ]
+  }
+]

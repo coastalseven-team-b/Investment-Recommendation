@@ -1,0 +1,184 @@
+[
+  {
+    "user_id": "U071",
+    "risk_profile": "High",
+    "behavior": "Saver",
+    "goal": "Retirement",
+    "recommendations": [
+      "ST003",
+      "ST002",
+      "MF004",
+      "ST010"
+    ]
+  },
+  {
+    "user_id": "U072",
+    "risk_profile": "High",
+    "behavior": "Saver",
+    "goal": "Retirement",
+    "recommendations": [
+      "ST003",
+      "MF004",
+      "ST010",
+      "ST002"
+    ]
+  },
+  {
+    "user_id": "U073",
+    "risk_profile": "High",
+    "behavior": "Investor",
+    "goal": "Education",
+    "recommendations": [
+      "MF009",
+      "ST006",
+      "ST001",
+      "MF005"
+    ]
+  },
+  {
+    "user_id": "U074",
+    "risk_profile": "Medium",
+    "behavior": "Saver",
+    "goal": "Family",
+    "recommendations": [
+      "MF007",
+      "MF002",
+      "ST008",
+      "MF006",
+      "MF010"
+    ]
+  },
+  {
+    "user_id": "U075",
+    "risk_profile": "Low",
+    "behavior": "Saver",
+    "goal": "Wealth Creation",
+    "recommendations": [
+      "ST006",
+      "ST010",
+      "MF008",
+      "MF005"
+    ]
+  },
+  {
+    "user_id": "U076",
+    "risk_profile": "Medium",
+    "behavior": "Spender",
+    "goal": "Wealth Creation",
+    "recommendations": [
+      "ST001",
+      "ST006",
+      "ST003"
+    ]
+  },
+  {
+    "user_id": "U077",
+    "risk_profile": "High",
+    "behavior": "Saver",
+    "goal": "Retirement",
+    "recommendations": [
+      "MF008",
+      "MF006",
+      "MF004",
+      "ST010"
+    ]
+  },
+  {
+    "user_id": "U078",
+    "risk_profile": "Low",
+    "behavior": "Investor",
+    "goal": "Emergency",
+    "recommendations": [
+      "ST005",
+      "MF004",
+      "ST009",
+      "MF001"
+    ]
+  },
+  {
+    "user_id": "U079",
+    "risk_profile": "High",
+    "behavior": "Spender",
+    "goal": "Emergency",
+    "recommendations": [
+      "ST009",
+      "ST005",
+      "MF007",
+      "MF004",
+      "MF001"
+    ]
+  },
+  {
+    "user_id": "U080",
+    "risk_profile": "Low",
+    "behavior": "Saver",
+    "goal": "Retirement",
+    "recommendations": [
+      "MF004",
+      "ST002",
+      "MF001",
+      "MF008"
+    ]
+  },
+  {
+    "user_id": "U081",
+    "risk_profile": "High",
+    "behavior": "Investor",
+    "goal": "Emergency",
+    "recommendations": [
+      "ST009",
+      "MF004",
+      "ST005",
+      "MF007",
+      "MF001"
+    ]
+  },
+  {
+    "user_id": "U082",
+    "risk_profile": "Medium",
+    "behavior": "Investor",
+    "goal": "Retirement",
+    "recommendations": [
+      "ST002",
+      "MF006",
+      "ST010",
+      "ST003"
+    ]
+  },
+  {
+    "user_id": "U083",
+    "risk_profile": "Low",
+    "behavior": "Saver",
+    "goal": "Family",
+    "recommendations": [
+      "ST009",
+      "ST002",
+      "ST005"
+    ]
+  },
+  {
+    "user_id": "U084",
+    "risk_profile": "Low",
+    "behavior": "Investor",
+    "goal": "Education",
+    "recommendations": [
+      "MF002",
+      "MF010",
+      "ST006",
+      "ST008",
+      "MF009"
+    ]
+  },
+  {
+    "user_id": "U085",
+    "risk_profile": "Low",
+    "behavior": "Investor",
+    "goal": "Emergency",
+    "recommendations": [
+      "ST009",
+      "MF004",
+      "MF001",
+      "ST005"
+    ]
+  }
+]
