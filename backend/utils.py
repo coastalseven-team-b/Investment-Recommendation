@@ -1,4 +1,5 @@
-from flask import current_app
+from flask import current_app, Blueprint, jsonify, request
+from flask_jwt_extended import jwt_required, get_jwt_identity
 from bson import ObjectId
 from extensions import mongo
 from datetime import datetime
@@ -6,6 +7,18 @@ import google.generativeai as genai
 import re
 
 genai.configure(api_key="AIzaSyBjMuHVsupmjxocF1k3hLPH0ideKpcrxi4")
+
+summary_bp = Blueprint('summary', __name__)
+
+@summary_bp.route('/api/summary', methods=['GET'])
+@jwt_required()
+def get_summary():
+    user_id = get_jwt_identity()
+    # Always generate summaries on each request, do not fetch from DB
+    summary = generate_summaries(user_id)
+    summary.pop('_id', None)
+    summary.pop('user_id', None)
+    return jsonify(summary)
 
 def generate_summaries(user_id):
     print(f"[Background] (generate_summaries) Running for user {user_id}")

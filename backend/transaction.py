@@ -1,17 +1,10 @@
-from flask import Blueprint, request, jsonify, current_app
+from flask import Blueprint, request, jsonify
 from flask_jwt_extended import jwt_required, get_jwt_identity
 from extensions import mongo
 from bson import ObjectId
 import csv
 import io
 from datetime import datetime
-import google.generativeai as genai
-import re
-import threading
-from utils import generate_summaries, run_generate_summaries
-
-# Set your Gemini API key (replace with your actual key or use env variable)
-genai.configure(api_key="AIzaSyBjMuHVsupmjxocF1k3hLPH0ideKpcrxi4")
 
 transaction_bp = Blueprint('transaction', __name__)
 
@@ -31,43 +24,57 @@ def upload_transactions():
 
     for row in csv_input:
         try:
-            # Normalize type and amount
+            # Normalize and strip all fields
             tx_type = row.get('type', 'debit').strip().lower()
             amount = abs(float(row['amount']))
+            tx_date_str = row['date'].strip()
+            description = row['description'].strip()
 
-            # Track transaction date
-            tx_date = datetime.strptime(row['date'], '%Y-%m-%d').date()
+            # Try multiple date formats
+            try:
+                tx_date = datetime.strptime(tx_date_str, '%Y-%m-%d').date()
+            except ValueError:
+                try:
+                    tx_date = datetime.strptime(tx_date_str, '%m/%d/%Y').date()
+                except ValueError:
+                    print(f"Skipping invalid row: {row}, error: date format not recognized")
+                    continue
             all_dates.append(tx_date)
 
-            # Check for duplicate
-            exists = mongo.db.transactions.find_one({
+            # Debug: print the duplicate check query
+            duplicate_query = {
                 'user_id': ObjectId(user_id),
-                'date': row['date'],
+                'date': tx_date_str,
                 'amount': amount,
-                'description': row['description']
-            })
+                'description': description
+            }
+            exists = mongo.db.transactions.find_one(duplicate_query)
 
             if not exists:
-                mongo.db.transactions.insert_one({
+                insert_doc = {
                     'user_id': ObjectId(user_id),
-                    'date': row['date'],
+                    'date': tx_date_str,
                     'amount': amount,
-                    'description': row['description'],
+                    'description': description,
                     'type': tx_type
-                })
+                }
+                mongo.db.transactions.insert_one(insert_doc)
                 new_count += 1
 
         except Exception as e:
             # Gracefully handle unexpected rows (e.g., missing fields or invalid dates)
-            print(f"Skipping invalid row: {row}, error: {e}")
             continue
+
+    # Print all transactions for this user after upload
+    all_user_txs = list(mongo.db.transactions.find({'user_id': ObjectId(user_id)}))
 
     # ✅ Validate 12 months range
     if all_dates:
         min_date = min(all_dates)
         max_date = max(all_dates)
-        duration = (max_date - min_date).days
-        if duration < 365:
+        # Accept if min_date is same month last year or earlier
+        months_apart = (max_date.year - min_date.year) * 12 + (max_date.month - min_date.month)
+        if months_apart < 11:  # 0-based, so 11 means 12 months span
             return jsonify({'error': 'Invalid transactions uploaded: Less than 12 months of data'}), 400
 
     behavior = calculate_financial_behavior(user_id)
@@ -75,55 +82,26 @@ def upload_transactions():
     # Save to user profile
     mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$set': {'financial_behavior': behavior}})
 
-    resp = jsonify({'msg': f'{new_count} transactions uploaded', 'financial_behavior_label': behavior})
-    if new_count > 0:
-        print(f"[Main] Spawning background thread for summary generation for user {user_id}")
-        threading.Thread(target=run_generate_summaries, args=(user_id,)).start()
-    return resp
+    return jsonify({'msg': f'{new_count} transactions uploaded', 'financial_behavior_label': behavior})
 
 def calculate_financial_behavior(user_id):
     txs = list(mongo.db.transactions.find({'user_id': ObjectId(user_id)}))
-    print('DEBUG: Transactions for user:', txs)
     income = sum(abs(float(tx['amount'])) for tx in txs if tx['type'] == 'credit')
     expenses = sum(abs(float(tx['amount'])) for tx in txs if tx['type'] == 'debit')
     investment = sum(abs(float(tx['amount'])) for tx in txs if tx['type'] == 'investment')
-    print(f'DEBUG: income={income}, expenses={expenses}, investment={investment}')
     if income == 0:
-        print('DEBUG: income is zero, returning Unknown')
         return 'Unknown'
     saving_rate = (income - expenses - investment) / income
     spending_rate = expenses / income
     investment_rate = investment / income
-    print(f'DEBUG: saving_rate={saving_rate}, spending_rate={spending_rate}, investment_rate={investment_rate}')
     if saving_rate >= 0.4 and investment_rate < 0.2:
-        print('DEBUG: Classified as Saver')
         return 'Saver'
     elif spending_rate >= 0.6 and investment_rate < 0.2:
-        print('DEBUG: Classified as Spender')
         return 'Spender'
     elif investment_rate >= 0.15 and saving_rate >= 0.2:
-        print('DEBUG: Classified as Investor')
         return 'Investor'
     else:
-        print('DEBUG: No classification matched, returning Unknown')
         return 'Unknown'
-
-@transaction_bp.route('/api/summary', methods=['GET'])
-@jwt_required()
-def get_summary():
-    user_id = get_jwt_identity()
-    txs = list(mongo.db.transactions.find({'user_id': ObjectId(user_id)}))
-    investments = list(mongo.db.investments.find({'user_id': ObjectId(user_id)}))
-    missing_data = []
-    if not txs:
-        missing_data.append('transactions')
-    if not investments:
-        missing_data.append('investments')
-    # Always generate summary on the fly, do not save to DB
-    summary = generate_summaries(user_id)
-    summary['user_id'] = str(user_id)
-    summary['missing_data'] = missing_data
-    return jsonify(summary)
 
 @transaction_bp.route('/api/transactions', methods=['GET'])
 @jwt_required()

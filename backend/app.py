@@ -39,12 +39,14 @@ from user import user_bp
 from investment import investment_bp
 from transaction import transaction_bp
 from recommendation import recommendation_bp
+from utils import summary_bp
 
 app.register_blueprint(auth_bp)
 app.register_blueprint(user_bp)
 app.register_blueprint(investment_bp)
 app.register_blueprint(transaction_bp)
 app.register_blueprint(recommendation_bp)
+app.register_blueprint(summary_bp)
 
 if __name__ == "__main__":
     app.run(debug=True, port=5050) 
