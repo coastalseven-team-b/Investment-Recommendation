@@ -119,39 +119,10 @@ def get_summary():
         missing_data.append('transactions')
     if not investments:
         missing_data.append('investments')
-    if missing_data:
-        from utils import generate_summaries
-        default = generate_summaries(user_id)
-        return jsonify({
-            'financial_behavior_summary': default['financial_behavior_summary'],
-            'investment_summary': default['investment_summary'],
-            'investment_tips': default['investment_tips'],
-            'missing_data': missing_data
-        })
-    # If both are present, proceed as before
-    summary = mongo.db.summaries.find_one({'user_id': ObjectId(user_id)})
-    missing = False
-    error_found = False
-    error_prefix = 'Error generating summary:'
-    if not summary:
-        # No summary at all, generate all
-        summary = generate_summaries(user_id)
-        missing = True
-    else:
-        # Check for missing fields or error messages
-        fields = ['financial_behavior_summary', 'investment_summary', 'investment_tips']
-        for f in fields:
-            val = summary.get(f, '')
-            if not val or (isinstance(val, str) and val.strip().startswith(error_prefix)):
-                missing = True
-                error_found = True
-        if missing or error_found:
-            summary = generate_summaries(user_id)
-    # Convert ObjectId and datetime to string
+    # Always generate summary on the fly, do not save to DB
+    summary = generate_summaries(user_id)
     summary['user_id'] = str(user_id)
-    if 'updated_at' in summary:
-        summary['updated_at'] = summary['updated_at'].isoformat()
-    summary.pop('_id', None)
+    summary['missing_data'] = missing_data
     return jsonify(summary)
 
 @transaction_bp.route('/api/transactions', methods=['GET'])
