@@ -7,14 +7,10 @@ import yfinance as yf
 from flask import current_app
 import os
 import requests
-from transaction import generate_summaries
+from utils import generate_summaries, run_generate_summaries
 import threading
 
 investment_bp = Blueprint('investment', __name__)
-
-def run_generate_summaries(user_id):
-    with current_app.app_context():
-        generate_summaries(user_id)
 
 @investment_bp.route('/api/investments', methods=['GET'])
 @jwt_required()
@@ -44,9 +40,10 @@ def add_investment():
     mongo.db.investments.insert_one(investment)
     # Deduct from virtual balance
     mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$inc': {'virtual_balance': -data['amount']}})
-    # Only after saving, generate summaries (synchronously)
-    generate_summaries(user_id)
-    return jsonify({'msg': 'Investment added'})
+    resp = jsonify({'msg': 'Investment added'})
+    print(f"[Main] Spawning background thread for summary generation for user {user_id}")
+    threading.Thread(target=run_generate_summaries, args=(user_id,)).start()
+    return resp
 
 @investment_bp.route('/api/investments/<inv_id>/sell', methods=['POST'])
 @jwt_required()
@@ -58,9 +55,10 @@ def sell_investment(inv_id):
     # Add back to virtual balance
     mongo.db.users.update_one({'_id': ObjectId(user_id)}, {'$inc': {'virtual_balance': inv['amount']}})
     mongo.db.investments.delete_one({'_id': ObjectId(inv_id)})
-    # Regenerate summaries synchronously after selling
-    generate_summaries(user_id)
-    return jsonify({'msg': 'Investment sold'})
+    resp = jsonify({'msg': 'Investment sold'})
+    print(f"[Main] Spawning background thread for summary generation for user {user_id}")
+    threading.Thread(target=run_generate_summaries, args=(user_id,)).start()
+    return resp
 
 @investment_bp.route('/api/investment-options', methods=['GET'])
 def get_investment_options():
